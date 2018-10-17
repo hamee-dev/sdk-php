@@ -34,3 +34,4 @@ SDKは以下のことが網羅されています。
 ## Author
 
 [hamee-dev](https://github.com/hamee-dev)
+
