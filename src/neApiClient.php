@@ -7,6 +7,8 @@
  *
 */
 
+namespace NextEngine;
+
 class neApiClient {
 	////////////////////////////////////////////////////////////////////////////
 	// 利用するサーバーのURLのスキーム＋ホスト名の定義
@@ -87,7 +89,7 @@ class neApiClient {
 	public function __construct($client_id, $client_secret, $redirect_uri = NULL, $access_token = NULL, $refresh_token = NULL) {
 		$this->_curl = curl_init() ;
 		if( $this->_curl === false ) {
-			throw new Exception('システムエラーが発生しました。') ;
+			throw new \Exception('システムエラーが発生しました。') ;
 		}
 		$this->_client_id		= $client_id ;
 		$this->_client_secret	= $client_secret ;
@@ -298,7 +300,7 @@ class neApiClient {
 		case self::RESULT_SUCCESS : 	// 成功
 			return(true) ;
 		default :
-			throw new Exception('SDKで例外が発生しました。クライアントID・シークレットや指定したパスが正しいか確認して下さい') ;
+			throw new \Exception('SDKで例外が発生しました。クライアントID・シークレットや指定したパスが正しいか確認して下さい') ;
 		}
 	}
 
@@ -330,7 +332,7 @@ class neApiClient {
 				self::PHP_VERSION_REQUIRED_CONSIDERATION,
 				self::VERSION_COMPARE_OPERATOR)
 			) {
-				$params['file_data'] = new CURLFile($params['file_data']) ;
+				$params['file_data'] = new \CURLFile($params['file_data']) ;
 				curl_setopt($this->_curl, CURLOPT_SAFE_UPLOAD, true);
 			} else {
 				$params['file_data'] = '@'.$params['file_data'] ;
@@ -340,7 +342,7 @@ class neApiClient {
 		$response = curl_exec($this->_curl) ;
 
 		if( $response === FALSE ) {
-			throw new Exception('システムエラーが発生しました(curlの実行に失敗['. curl_error($this->_curl) .'])。') ;
+			throw new \Exception('システムエラーが発生しました(curlの実行に失敗['. curl_error($this->_curl) .'])。') ;
 		}
 		return(json_decode($response, true)) ;
 	}

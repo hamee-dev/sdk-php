@@ -1,0 +1,30 @@
+{
+    "name": "hamee-dev/sdk-php",
+    "description": "NextEngine SDK for PHP",
+    "keywords": [
+        "NextEngine",
+        "next-engine",
+        "PHP",
+        "API",
+        "Hamee"
+    ],
+    "type": "library",
+    "license": "MIT",
+    "homepage": "https://github.com/hamee-dev/sdk-php",
+    "authors": [
+      {
+        "name": "NextEngine",
+        "homepage": "https://developer.next-engine.com",
+        "email": "none"
+      }
+    ],
+    "require": {
+        "php": ">=5.5"
+    },
+    "autoload": {
+      "psr-4": {
+        "NextEngine\\": "src/"
+      }
+    }
+}
+
