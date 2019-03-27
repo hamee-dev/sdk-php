@@ -6,7 +6,7 @@
  * @copyright Hamee Corp. All Rights Reserved.
  *
 */
-require_once('./neApiClient.php') ;
+use NextEngine\neApiClient;
 
 // この値を「アプリを作る->API->テスト環境設定」の値に更新して下さい。
 // (アプリを販売する場合は本番環境設定の値に更新して下さい)

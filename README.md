@@ -17,7 +17,68 @@ SDKは以下のことが網羅されています。
 
 ## Environment
 
-推奨環境: PHP version 5.6 or greater
+推奨環境: PHP version 5.6 or greater  
+curl 7.25.0以降
+
+## Installing
+
+#### Composerを利用する場合
+
+Composerをインストールしてください。
+
+```
+$ curl -s http://getcomposer.org/installer | php
+```
+
+以下のようにcomposer.jsonを作成してください。
+
+```
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/hamee-dev/sdk-php"
+        }
+    ],
+    "require": {
+        "hamee-dev/sdk-php": "dev-master"
+    }
+}
+```
+
+特定のバージョンを指定したい場合は、タグ名を指定してください。
+```
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/hamee-dev/sdk-php"
+        }
+    ],
+    "require": {
+        "hamee-dev/sdk-php": "タグ名"
+    }
+}
+```
+
+ライブラリーをインストールします。
+
+```
+$ php composer.phar install
+```
+
+ご利用環境のディレクトリ構成に応じたパスを指定してautoloaderを読み込んでください。
+
+```
+require_once("/path/to/your/vendor/autoload.php");
+```
+
+ライブラリーの使い方についてはサンプルコードをご参照ください。
+
+#### ダウンロードする場合
+
+srcディレクトリをinclude_pathに設定してrequireあるいはincludeしてご利用ください。
+
 
 ## Contribution
 
@@ -34,4 +95,3 @@ SDKは以下のことが網羅されています。
 ## Author
 
 [hamee-dev](https://github.com/hamee-dev)
-
