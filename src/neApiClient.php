@@ -51,6 +51,7 @@ class neApiClient {
 	// コードを実行するPHPのバージョンに応じてcurlの処理を変更するための定数
 	////////////////////////////////////////////////////////////////////////////
 	const PHP_VERSION_REQUIRED_CONSIDERATION = '5.5.0' ;
+	const CURL_VERSION_REQUIRED_CONSIDERATION = '7.25.0' ;
 	const VERSION_COMPARE_OPERATOR = ">=" ;
 
 	/**
@@ -106,6 +107,26 @@ class neApiClient {
 		curl_setopt($this->_curl, CURLOPT_FAILONERROR,		true) ;
 		if(!is_null($redirect_uri)) {
 			curl_setopt($this->_curl, CURLOPT_REFERER,		'https://'.parse_url($redirect_uri, PHP_URL_HOST)) ;
+		}
+
+		// NOTE:
+		// curlのオプションで「TCP Keep Alive」を有効にするには、
+		// PHPのバージョンが5.5.0以上 かつ libcurlのバージョンが7.25.0以上が必要。
+		// （※composerのrequire条件としてphpは5.5以上としているため、ロジックでの判定は省略している。）
+		if(version_compare(curl_version()['version'],
+			self::CURL_VERSION_REQUIRED_CONSIDERATION,
+			self::VERSION_COMPARE_OPERATOR)
+		) {
+			// 「TCP Keep Alive」を有効
+			// 理由：
+			// ネットワークの経路（NAT等）によっては、一定時間（アイドルタイムアウトの設定等）アイドル状態になると、
+			// 接続が中断されレスポンスが受け取れない状況が発生する。「TCP Keep Alive」を有効にすることにより、
+			// 接続を維持することで回避する。（60秒未満のアイドルタイムアウトする環境の場合は、keepaliveの発信秒数等は調整してください。）
+			curl_setopt($this->_curl, CURLOPT_TCP_KEEPALIVE, true);
+			// 初回のkeepaliveを発信するまでの秒数
+			curl_setopt($this->_curl, CURLOPT_TCP_KEEPIDLE,  60);
+			// keepaliveを発信するインターバル（秒数）
+			curl_setopt($this->_curl, CURLOPT_TCP_KEEPINTVL, 60);
 		}
 
 		// 次のエラーが出てcURLの実行に失敗する場合、cURLの提供元からcacert.pemを取得し、
